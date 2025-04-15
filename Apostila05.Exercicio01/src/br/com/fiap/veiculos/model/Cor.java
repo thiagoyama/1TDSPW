@@ -6,6 +6,13 @@ public class Cor {
     private String nome;
     private int r,g,b;
 
+    public Cor(String nome, int r, int g, int b) {
+        this.nome = nome;
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+
     //Métodos
     public void alterarCor(int r, int g, int b, String nome){
         this.r = r;
