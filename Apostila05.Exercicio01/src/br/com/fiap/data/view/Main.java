@@ -1,4 +1,6 @@
-package br.com.fiap.veiculos.model;
+package br.com.fiap.data.view;
+
+import br.com.fiap.data.model.Data;
 
 import java.util.Scanner;
 

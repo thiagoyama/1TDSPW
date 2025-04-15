@@ -1,4 +1,4 @@
-package br.com.fiap.veiculos.model;
+package br.com.fiap.data.model;
 
 public class Data {
     private int dia;
