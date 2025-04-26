@@ -7,8 +7,13 @@ public class Livro {
     private int paginas;
     private boolean disponivel;
 
+    //Construtor
+    public Livro(){
+        System.out.println("Passei por aqui");
+    }
+
     // métodos
-    void emprestar() {
+    public void emprestar() {
         disponivel = false;
     }
 
@@ -21,6 +26,7 @@ public class Livro {
     public int getPaginas(){
         return paginas;
     }
+
     //Quando for boolean, pode ser getXXXX ou isXXXX
     public boolean isDisponivel(){
         return disponivel;
