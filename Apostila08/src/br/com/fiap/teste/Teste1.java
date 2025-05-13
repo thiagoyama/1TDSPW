@@ -3,7 +3,7 @@ package br.com.fiap.teste;
 public class Teste1 {
 
     public static void main(String[] args) {
-        String email = "Antonella@lizmacedo.com";
+        String email = "churros@lizmacedo.com";
         String confirmacaoEmail = new String("antonella@lizmacedo.com");
 
         //Validar se os e-mails são iguais
@@ -14,6 +14,20 @@ public class Teste1 {
         }
         System.out.println(email);
         System.out.println(confirmacaoEmail);
+
+        //Retonar a posição do @ do email
+        System.out.println("Posição: " + email.indexOf("@"));
+
+        //Imprimir a quantidade de caracteres do e-mail
+        System.out.println("Qtd de caracteres: " + email.length());
+
+        //Exibir o e-mail (sem o dominio)
+        String qualquerCoisa = email.substring(0, email.indexOf("@"));
+        System.out.println("Email sem dominio: " + qualquerCoisa);
+
+        //Exibir o dominio do email
+        String dominio = email.substring(email.indexOf("@") + 1);
+        System.out.println("Dominio: " + dominio);
 
     }
 }
