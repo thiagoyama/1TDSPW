@@ -6,6 +6,10 @@ public class Pessoa {
     private int idade;
     private Endereco endereco;
 
+    public Pessoa(String nome){
+        this.nome = nome;
+    }
+
     public String getNome() {
         return nome;
     }
