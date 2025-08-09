@@ -12,6 +12,11 @@ public class Disciplina {
         this.categoria = categoria;
     }
 
+    @Override
+    public String toString() {
+        return nome + " - " + categoria + " - " + cargaHoraria + " horas";
+    }
+
     public String getNome() {
         return nome;
     }
