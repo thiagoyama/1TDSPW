@@ -15,7 +15,7 @@ public class Exemplo02 {
 
         int opcao = -1;
         while (opcao != 0) {
-            opcao = Integer.parseInt(JOptionPane.showInputDialog("Escolha: \n1-Cadastrar \n2-Listar \n0-Sair"));
+            opcao = Integer.parseInt(JOptionPane.showInputDialog("Escolha: \n1-Cadastrar \n2-Listar \n3-Remover \n4-Exibir total \n0-Sair"));
             if (opcao == 1) {
                 //Ler do usuário os valores dos atributos da disciplina
                 String nome = JOptionPane.showInputDialog("Digite o nome da disciplina");
@@ -34,6 +34,21 @@ public class Exemplo02 {
                     //JOptionPane.showMessageDialog(null, disciplinas.get(i));
                     System.out.println(disciplinas.get(i));
                 }//for
+            }else if (opcao == 3) {
+                //Pede o indice para o usuario
+                int posicao = Integer.parseInt(JOptionPane.showInputDialog("Digite o indice"));
+                //Validar se o indice é valido
+                if (posicao < 0 || posicao >= disciplinas.size()) {
+                    JOptionPane.showMessageDialog(null, "Posição inválida");
+                } else {
+                    //Remove a disciplina pelo indice
+                    disciplinas.remove(posicao);
+                    //Mensagem de sucesso
+                    JOptionPane.showMessageDialog(null, "Disciplina removida!");
+                }
+            }else if (opcao == 4){
+                //Exibir a quantidade de disciplinas
+                JOptionPane.showMessageDialog(null, "Quantidade " + disciplinas.size());
             }//else
         }//while
         JOptionPane.showMessageDialog(null, "Finalizando o sistema");
