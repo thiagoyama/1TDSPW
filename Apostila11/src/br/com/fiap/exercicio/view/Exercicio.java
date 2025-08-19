@@ -48,5 +48,46 @@ public class Exercicio {
             System.out.println(a);
         }
 
+        //Exibir a média de idade
+        int somaIdades = 0;
+        double somaNotas = 0;
+        int maiorIdade = alunos.getFirst().getIdade();
+        int menorIdade = alunos.getFirst().getIdade();
+        for (Aluno a : alunos){
+            somaIdades += a.getIdade();
+            somaNotas += (a.getNota1() + a.getNota2())/2;
+            if (a.getIdade() > maiorIdade)
+                maiorIdade = a.getIdade();
+            if (a.getIdade() < menorIdade)
+                menorIdade = a.getIdade();
+        }
+
+        System.out.println("A maior idade é: " + maiorIdade);
+        System.out.println("A menor idade é: " + menorIdade);
+        System.out.println("Média de idade: " + somaIdades/alunos.size());
+        System.out.println("Média de notas: " + somaNotas/alunos.size());
+
+        //Exibir o menu
+        int opcao;
+        do {
+            System.out.println("""
+                    Escolha:
+                    1-Exibir nomes e medias
+                    2-Exibir alunos media > 6
+                    3-Exibir alunos com mais de 30
+                    4-Excluir alunos media < 3
+                    5-Sair""");
+            opcao = leitor.nextInt();
+            switch (opcao){
+                case 1: //Exibir nome e medias
+                    break;
+                case 2: //Exibir alunos media > 6
+                    break;
+                case 3: //Exibir alunos idade > 30
+                    break;
+                case 4: //Remover alunos media < 3
+                    break;
+            }
+        } while(opcao != 5);
     }//main
 }//class
