@@ -1,6 +1,8 @@
 package br.com.fiap.exercicio.view;
 
 import br.com.fiap.exercicio.model.Aluno;
+
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -80,13 +82,38 @@ public class Exercicio {
             opcao = leitor.nextInt();
             switch (opcao){
                 case 1: //Exibir nome e medias
+                    System.out.println("***************NOME E MÉDIAS**************");
+                    for (Aluno aluno : alunos){
+                        System.out.println(aluno.getNome() + " média: " + (aluno.getNota1() + aluno.getNota2())/2);
+                    }
                     break;
                 case 2: //Exibir alunos media > 6
+                    System.out.println("*************ALUNOS COM MÉDIA > 6************");
+                    for (Aluno aluno : alunos){
+                        if ((aluno.getNota1() + aluno.getNota2())/2 > 6){
+                            System.out.println(aluno);
+                        }
+                    }
                     break;
                 case 3: //Exibir alunos idade > 30
+                    System.out.println("**********ALUNOS COM IDADE > 30***************");
+                    for (Aluno aluno : alunos){
+                        if (aluno.getIdade() > 30)
+                            System.out.println(aluno);
+                    }
                     break;
                 case 4: //Remover alunos media < 3
+                    System.out.println("*****REMOVENDO ALUNOS COM MÉDIA < 3************");
+                    for (int i = 0; i < alunos.size(); i++){
+                        if ((alunos.get(i).getNota1() + alunos.get(i).getNota2())/2 < 3)
+                            alunos.remove(alunos.get(i));
+                    }
                     break;
+                case 5:
+                    System.out.println("Finalizando o programa");
+                    break;
+                default:
+                    System.out.println("Opção inválida");
             }
         } while(opcao != 5);
     }//main
