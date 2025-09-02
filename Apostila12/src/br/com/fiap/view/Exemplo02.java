@@ -1,5 +1,7 @@
 package br.com.fiap.view;
 
+import br.com.fiap.exception.SaldoInsuficienteException;
+import br.com.fiap.exception.ValorInvalidoException;
 import br.com.fiap.model.ContaCorrente;
 
 import java.util.InputMismatchException;
@@ -38,10 +40,13 @@ public class Exemplo02 {
                     default:
                         System.out.println("Opção inválida");
                 }
-            }  catch (InputMismatchException e){
+            }  catch (InputMismatchException e) {
                 leitor.next();
                 System.err.println("Valor inválido");
-            }  catch (Exception e){
+            } catch (ValorInvalidoException | SaldoInsuficienteException e) {
+                System.err.println("Tratamento específico...");
+                System.err.println(e.getMessage());
+            } catch (Exception e){
                 System.err.println(e.getMessage());
             }
         } while(opcao != 0);
