@@ -16,6 +16,11 @@ public class Funcionario {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "Código: " + codigo + ", Nome: " + nome + ", Salario: " + salario + ", Ativo: " + ativo + ", Email: " + email;
+    }
+
     public int getCodigo() {
         return codigo;
     }
