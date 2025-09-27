@@ -1,6 +1,7 @@
 package br.com.fiap.banco.view;
 
 import br.com.fiap.banco.dao.FuncionarioDao;
+import br.com.fiap.banco.exception.EntidadeNaoEncontradaException;
 import br.com.fiap.banco.model.Funcionario;
 
 import java.util.List;
@@ -26,15 +27,40 @@ public class Terminal {
                         System.out.println("Funcionario cadastrado com sucesso!");
                         break;
                     case 2:
-                        //Atualizar funcionario
-                        funcionario = lerFuncionario(leitor);
-                        dao.atualizar(funcionario);
-                        System.out.println("Funcinario atualizado com sucesso!");
+                        try {
+                            //Atualizar funcionario
+                            funcionario = lerFuncionario(leitor);
+                            dao.atualizar(funcionario);
+                            System.out.println("Funcionário atualizado com sucesso!");
+                        } catch (EntidadeNaoEncontradaException e){
+                            System.err.println(e.getMessage());
+                        }
+                        break;
+                    case 3:
+                        try {
+                            //Pesquisar por ID
+                            System.out.println("Digite o código do funcionário");
+                            int codigo = leitor.nextInt();
+                            Funcionario func = dao.buscar(codigo);
+                            System.out.println(func);
+                        } catch (EntidadeNaoEncontradaException e){
+                            System.err.println(e.getMessage());
+                        }
                         break;
                     case 4:
                         List<Funcionario> lista = dao.listar();
                         for (Funcionario f : lista){
                             System.out.println(f);
+                        }
+                        break;
+                    case 5:
+                        try {
+                            System.out.println("Informe o código do funcionário");
+                            int codigo = leitor.nextInt();
+                            dao.remover(codigo);
+                            System.out.println("Funcionário excluido com sucesso!");
+                        } catch (EntidadeNaoEncontradaException e){
+                            System.err.println(e.getMessage());
                         }
                         break;
                     case 0:

@@ -1,5 +1,6 @@
 package br.com.fiap.banco.dao;
 
+import br.com.fiap.banco.exception.EntidadeNaoEncontradaException;
 import br.com.fiap.banco.factory.ConnectionFactory;
 import br.com.fiap.banco.model.Funcionario;
 import java.sql.Connection;
@@ -31,7 +32,7 @@ public class FuncionarioDao {
         stmt.executeUpdate();
     }
 
-    public void atualizar(Funcionario funcionario) throws SQLException {
+    public void atualizar(Funcionario funcionario) throws SQLException, EntidadeNaoEncontradaException {
         PreparedStatement stmt = conexao.prepareStatement("update t_tdspw_funcionario set nm_funcionario = ?," +
                 "vl_salario = ?, st_ativo = ?, ds_email = ? where cd_funcionario = ?");
         //Setar os valores no SQL
@@ -41,27 +42,54 @@ public class FuncionarioDao {
         stmt.setString(4, funcionario.getEmail());
         stmt.setInt(5, funcionario.getCodigo());
         //Executar o comando
-        stmt.executeUpdate();
+        if (stmt.executeUpdate() == 0)
+            throw new EntidadeNaoEncontradaException("Nenhum funcionário encontrado para atualização");
     }
 
-    public void remover(int codigo){}
+    public void remover(int codigo) throws SQLException, EntidadeNaoEncontradaException {
+        //Criar o PreparedStatement
+        PreparedStatement stmt = conexao.prepareStatement("delete from t_tdspw_funcionario where cd_funcionario = ?");
+        //Setar o codigo no PreparedStatement
+        stmt.setInt(1, codigo);
+        //Executar o comando e recupera a qtd de linhas removidas
+        int linha = stmt.executeUpdate();
+        if (linha == 0)
+            throw new EntidadeNaoEncontradaException("Não foi possível remover, pois o funcionário não existe");
+    }
 
-    public Funcionario buscar(int codigo){return null;}
+    public Funcionario buscar(int codigo) throws SQLException, EntidadeNaoEncontradaException {
+        //Criar o PreparedStatement
+        PreparedStatement stmt = conexao.prepareStatement("select * from t_tdspw_funcionario where cd_funcionario = ?");
+        //Setar o codigo no PreparedStatement
+        stmt.setInt(1, codigo);
+        //Executar o comando SQL
+        ResultSet rs = stmt.executeQuery();
+        //Valida se retornou algum resultado
+        if (!rs.next())
+            throw new EntidadeNaoEncontradaException("Funcionario não encontrado");
+        //Recuperar os dados, criar um funcionario e retornar
+        return parseFuncionario(rs);
+    }
 
     public List<Funcionario> listar() throws SQLException {
         PreparedStatement stmt = conexao.prepareStatement("select * from t_tdspw_funcionario");
         ResultSet rs = stmt.executeQuery();
         List<Funcionario> funcionarios = new ArrayList<>();
         while (rs.next()){
-            int codigo = rs.getInt("cd_funcionario");
-            String nome = rs.getString("nm_funcionario");
-            double salario = rs.getDouble("vl_salario");
-            boolean ativo = rs.getBoolean("st_ativo");
-            String email = rs.getString("ds_email");
-            Funcionario funcionario = new Funcionario(codigo, nome, salario, ativo, email);
+            Funcionario funcionario = parseFuncionario(rs);
             funcionarios.add(funcionario);
         }
         return funcionarios;
+    }
+
+    private static Funcionario parseFuncionario(ResultSet rs) throws SQLException {
+        int codigo = rs.getInt("cd_funcionario");
+        String nome = rs.getString("nm_funcionario");
+        double salario = rs.getDouble("vl_salario");
+        boolean ativo = rs.getBoolean("st_ativo");
+        String email = rs.getString("ds_email");
+        Funcionario funcionario = new Funcionario(codigo, nome, salario, ativo, email);
+        return funcionario;
     }
 
 }
