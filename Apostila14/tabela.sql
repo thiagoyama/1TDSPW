@@ -5,3 +5,5 @@ create table t_tdspw_funcionario(
         st_ativo number(1,0),
         ds_email varchar(80)
 );
+
+create sequence seq_tdspw_funcionario start with 1 increment by 1 nocache;

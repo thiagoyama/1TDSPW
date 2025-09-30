@@ -21,13 +21,13 @@ public class FuncionarioDao {
     public void cadastrar(Funcionario funcionario) throws SQLException {
         //Criar o PreparedStatement
         PreparedStatement stmt = conexao.prepareStatement("insert into t_tdspw_funcionario (cd_funcionario," +
-                "nm_funcionario, vl_salario, st_ativo, ds_email) values (?,?,?,?,?)");
+                "nm_funcionario, vl_salario, st_ativo, ds_email) values (seq_tdspw_funcionario.nextval,?,?,?,?)");
         //Setar os valores dos paramentros na query
-        stmt.setInt(1, funcionario.getCodigo());
-        stmt.setString(2, funcionario.getNome());
-        stmt.setDouble(3, funcionario.getSalario());
-        stmt.setBoolean(4, funcionario.isAtivo());
-        stmt.setString(5, funcionario.getEmail());
+        //stmt.setInt(1, funcionario.getCodigo());
+        stmt.setString(1, funcionario.getNome());
+        stmt.setDouble(2, funcionario.getSalario());
+        stmt.setBoolean(3, funcionario.isAtivo());
+        stmt.setString(4, funcionario.getEmail());
         //Executar a query
         stmt.executeUpdate();
     }
