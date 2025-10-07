@@ -10,6 +10,14 @@ public class Doce {
     private double valor;
     private LocalDate dataValidade;
 
+    public Doce(int codigo, String nome, double peso, double valor, LocalDate dataValidade) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.peso = peso;
+        this.valor = valor;
+        this.dataValidade = dataValidade;
+    }
+
     public int getCodigo() {
         return codigo;
     }
