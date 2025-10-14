@@ -1,6 +1,8 @@
 package br.com.fiap.loja.resource;
 
 import br.com.fiap.loja.dao.DoceDao;
+import br.com.fiap.loja.dto.doce.CadastroDoceDto;
+import br.com.fiap.loja.dto.doce.DetalhesDoceDto;
 import br.com.fiap.loja.exception.EntidadeNaoEncontradaException;
 import br.com.fiap.loja.model.Doce;
 import jakarta.inject.Inject;
@@ -9,6 +11,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import org.modelmapper.ModelMapper;
 
 import java.net.URI;
 import java.sql.SQLException;
@@ -21,6 +24,9 @@ public class DoceResource {
 
     @Inject
     private DoceDao doceDao;
+
+    @Inject
+    private ModelMapper mapper;
 
     @DELETE
     @Path("/{id}")
@@ -50,13 +56,16 @@ public class DoceResource {
     }
 
     @POST
-    public Response criar(Doce doce, @Context UriInfo uriInfo) throws SQLException {
+    public Response criar(CadastroDoceDto dto, @Context UriInfo uriInfo) throws SQLException {
+        //Cria um doce com base nos dados do DTO
+        Doce doce = mapper.map(dto, Doce.class);
+
         doceDao.cadastrar(doce);
         //Criar a URI para acessar o doce criado
         URI uri = uriInfo.getAbsolutePathBuilder()
                 .path(String.valueOf(doce.getCodigo())).build();
 
-        return Response.created(uri).entity(doce).build(); //201
+        return Response.created(uri).entity(mapper.map(doce, DetalhesDoceDto.class)).build(); //201
     }
 
 }

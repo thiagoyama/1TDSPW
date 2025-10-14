@@ -1,32 +1,13 @@
-package br.com.fiap.loja.model;
+package br.com.fiap.loja.dto.doce;
 
 import java.time.LocalDate;
 
-public class Doce {
+public class CadastroDoceDto {
 
-    private int codigo;
     private String nome;
     private double peso;
     private double valor;
     private LocalDate dataValidade;
-
-    public Doce(){}
-
-    public Doce(int codigo, String nome, double peso, double valor, LocalDate dataValidade) {
-        this.codigo = codigo;
-        this.nome = nome;
-        this.peso = peso;
-        this.valor = valor;
-        this.dataValidade = dataValidade;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
 
     public String getNome() {
         return nome;
