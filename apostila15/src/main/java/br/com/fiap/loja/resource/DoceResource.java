@@ -1,11 +1,13 @@
 package br.com.fiap.loja.resource;
 
 import br.com.fiap.loja.dao.DoceDao;
+import br.com.fiap.loja.dto.doce.AtualizarDoceDto;
 import br.com.fiap.loja.dto.doce.CadastroDoceDto;
 import br.com.fiap.loja.dto.doce.DetalhesDoceDto;
 import br.com.fiap.loja.exception.EntidadeNaoEncontradaException;
 import br.com.fiap.loja.model.Doce;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -37,7 +39,8 @@ public class DoceResource {
 
     @PUT
     @Path("/{id}")
-    public Response atualizar(@PathParam("id")int codigo, Doce doce) throws EntidadeNaoEncontradaException, SQLException {
+    public Response atualizar(@PathParam("id")int codigo, @Valid AtualizarDoceDto dto) throws EntidadeNaoEncontradaException, SQLException {
+        Doce doce = mapper.map(dto, Doce.class);
         doce.setCodigo(codigo);
         doceDao.atualizar(doce);
         return Response.ok().build();
@@ -47,16 +50,18 @@ public class DoceResource {
     @Path("/{id}")
     public Response buscar(@PathParam("id") int codigo) throws EntidadeNaoEncontradaException, SQLException {
         Doce doce = doceDao.buscar(codigo);
-        return Response.ok(doce).build();
+        return Response.ok(mapper.map(doce, DetalhesDoceDto.class)).build();
     }
 
     @GET
-    public List<Doce> listar() throws SQLException {
-        return doceDao.listar();
+    public List<DetalhesDoceDto> listar() throws SQLException {
+        return doceDao.listar().stream().map(
+                doce -> mapper.map(doce, DetalhesDoceDto.class)
+        ).toList();
     }
 
     @POST
-    public Response criar(CadastroDoceDto dto, @Context UriInfo uriInfo) throws SQLException {
+    public Response criar(@Valid CadastroDoceDto dto, @Context UriInfo uriInfo) throws SQLException {
         //Cria um doce com base nos dados do DTO
         Doce doce = mapper.map(dto, Doce.class);
 

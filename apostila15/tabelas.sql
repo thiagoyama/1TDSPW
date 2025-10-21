@@ -7,3 +7,10 @@ create table t_tdspw_doce (
 );
 
 create sequence sq_tdspw_doce start with 1 increment by 1 nocache;
+
+create table t_tdspw_avaliacao (
+    cd_avaliacao number(6,0) primary key,
+    ds_avaliacao varchar2(200),
+    dt_cadastro date,
+    vl_nota number(4,2),
+);

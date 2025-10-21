@@ -1,12 +1,15 @@
 package br.com.fiap.loja.dto.doce;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-public class CadastroDoceDto {
+public class AtualizarDoceDto {
 
-    @NotBlank(message = "Nome é obrigatório")
+    @NotBlank
     @Size(max = 80)
     private String nome;
 
