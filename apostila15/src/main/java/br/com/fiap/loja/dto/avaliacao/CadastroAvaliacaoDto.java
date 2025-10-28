@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
-public class CadastroAvaliacaoDoce {
+public class CadastroAvaliacaoDto {
 
     @Size(max = 200)
     private String descricao;

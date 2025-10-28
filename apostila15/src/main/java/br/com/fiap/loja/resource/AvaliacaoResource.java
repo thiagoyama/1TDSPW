@@ -1,8 +1,8 @@
 package br.com.fiap.loja.resource;
 
 import br.com.fiap.loja.dao.AvaliacaoDao;
+import br.com.fiap.loja.dto.avaliacao.CadastroAvaliacaoDto;
 import br.com.fiap.loja.dto.avaliacao.DetalhesAvaliacaoDto;
-import br.com.fiap.loja.dto.doce.CadastroDoceDto;
 import br.com.fiap.loja.model.Avaliacao;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.*;
 import org.modelmapper.ModelMapper;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Path("/doces/{codigoDoce}/avaliacoes")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -23,9 +24,14 @@ public class AvaliacaoResource {
     @Inject
     private ModelMapper mapper;
 
+    @GET
+    public List<DetalhesAvaliacaoDto> buscar(@PathParam("codigoDoce") int codigoDoce){
+        return avaliacaoDao.buscarPorDoce(codigoDoce);
+    }
+
     @POST
     public Response create(@PathParam("codigoDoce") int codigoDoce,
-                           @Valid CadastroDoceDto dto, @Context UriInfo uriInfo) throws SQLException {
+                           @Valid CadastroAvaliacaoDto dto, @Context UriInfo uriInfo) throws SQLException {
 
         Avaliacao avaliacao = mapper.map(dto, Avaliacao.class);
         avaliacao.setCodigoDoce(codigoDoce);
