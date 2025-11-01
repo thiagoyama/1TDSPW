@@ -3,6 +3,7 @@ package br.com.fiap.loja.resource;
 import br.com.fiap.loja.dao.AvaliacaoDao;
 import br.com.fiap.loja.dto.avaliacao.CadastroAvaliacaoDto;
 import br.com.fiap.loja.dto.avaliacao.DetalhesAvaliacaoDto;
+import br.com.fiap.loja.dto.avaliacao.MediaAvaliacaoDto;
 import br.com.fiap.loja.model.Avaliacao;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -25,8 +26,15 @@ public class AvaliacaoResource {
     private ModelMapper mapper;
 
     @GET
-    public List<DetalhesAvaliacaoDto> buscar(@PathParam("codigoDoce") int codigoDoce){
-        return avaliacaoDao.buscarPorDoce(codigoDoce);
+    @Path("/status")
+    public Response media(@PathParam("codigoDoce") int codigoDoce) throws SQLException {
+        MediaAvaliacaoDto status = avaliacaoDao.buscarMedia(codigoDoce);
+        return Response.ok(status).build();
+    }
+
+    @GET
+    public List<DetalhesAvaliacaoDto> buscar(@PathParam("codigoDoce") int codigoDoce) throws SQLException {
+        return avaliacaoDao.buscarPorDoce(codigoDoce).stream().map(d -> mapper.map(d, DetalhesAvaliacaoDto.class)).toList();
     }
 
     @POST
