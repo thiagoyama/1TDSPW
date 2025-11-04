@@ -19,6 +19,21 @@ public class DoceDao {
     @Inject
     private DataSource dataSource;
 
+    public List<Doce> buscarPorPrecoMenor(double preco) throws SQLException {
+        try (Connection conexao = dataSource.getConnection()){
+            PreparedStatement stmt = conexao.prepareStatement(
+                    "select * from t_tdspw_doce where vl_doce < ?");
+            stmt.setDouble(1, preco);
+            ResultSet rs = stmt.executeQuery();
+            List<Doce> lista = new ArrayList<>();
+            while (rs.next()){
+                Doce doce = parseDoce(rs);
+                lista.add(doce);
+            }
+            return lista;
+        }
+    }
+
     public void remover(int codigo) throws SQLException, EntidadeNaoEncontradaException {
         try (Connection conexao = dataSource.getConnection()){
             PreparedStatement stmt = conexao.prepareStatement("delete from t_tdspw_doce where cd_doce = ?");
