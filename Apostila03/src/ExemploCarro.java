@@ -31,5 +31,6 @@ public class ExemploCarro {
         tera.ano = 2026;
 
         System.out.println("Modelo: " + tera.modelo + ", ano: " + tera.ano);
+
     }
 }
