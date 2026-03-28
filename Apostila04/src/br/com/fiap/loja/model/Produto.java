@@ -20,5 +20,8 @@ public class Produto {
 
     //Criar um método para calcular o valor total da compra
     //Dado a quantidade, calcular o valor da compra
+    public double calcularValorTotal(int quantidade){
+        return preco * quantidade;
+    }
 
 }
