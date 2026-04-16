@@ -23,7 +23,12 @@ public class Terminal {
         aviao.setQuantidadeTurbinas(2);
 
         //Exibir os valores do aviao (incluindo a cor)
-
+        System.out.println(aviao.getModelo() + " " + aviao.getPrefixo());
+        System.out.println("Comprimento: " + aviao.getComprimento());
+        System.out.println("Lugares: " + aviao.getQuantidadeLugares());
+        System.out.println("Turbinas: " + aviao.getQuantidadeTurbinas());
+        System.out.println("Ano: " + aviao.getAnoFabricacao());
+        System.out.println("Cor: " + aviao.getCor().getNome());
 
     }
 }
