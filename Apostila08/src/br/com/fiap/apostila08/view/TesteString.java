@@ -9,7 +9,7 @@ public class TesteString {
         System.out.println(nome + " é aluno da \"FIAP\".\nVamos no Evento!");
 
         //Verificar se o nome é "Jose" "jose" "jOSe"
-        if (nome.equalsIgnoreCase("Jose")){
+        if (nome.equalsIgnoreCase("JOSE")){
             System.out.println("Nome é Jose");
         } else {
             System.out.println("Não é o Jose");
