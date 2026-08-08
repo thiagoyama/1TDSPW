@@ -1,5 +1,7 @@
 package br.com.fiap.view;
 
+import br.com.fiap.model.Pokemon;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,8 @@ public class Exemplo01 {
         String turma = "1TDSPW";
 
         //criar uma variável para armazenar o nome dos alunos da turma
-        List<String> alunos = new ArrayList();
+        List<String> alunos = new ArrayList<>();
+
         //Adicionar dois nomes na lista
         alunos.add("Gabriel");
         alunos.add("Alexandre");

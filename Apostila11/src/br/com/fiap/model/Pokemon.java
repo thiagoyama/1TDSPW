@@ -1,7 +1,5 @@
 package br.com.fiap.model;
 
-import java.security.cert.PolicyNode;
-
 public class Pokemon {
 
     //Atributos
@@ -16,6 +14,11 @@ public class Pokemon {
         this.tipo = tipo;
         this.nome = nome;
         this.nivel = nivel;
+    }
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome + ", Tipo: " + tipo + ", Nível: " + nivel;
     }
 
     //Getters e Setters
