@@ -2,6 +2,7 @@ package br.com.fiap.apostila12.view;
 
 import br.com.fiap.apostila12.exception.CupomInvalidoException;
 import br.com.fiap.apostila12.exception.DescontoAcimaDoPrecoException;
+import br.com.fiap.apostila12.exception.PorcentagemNegativaException;
 import br.com.fiap.apostila12.model.Produto;
 
 import java.util.InputMismatchException;
@@ -29,7 +30,13 @@ public class Exemplo02 {
             System.out.println(produto.darDesconto(cupom));
 
             //Aumentar preço
+            System.out.println("Digite a % de aumento");
+            int porcentagem = leitor.nextInt();
+            produto.aumentarPreco(porcentagem);
+            System.out.println("Novo valor " + produto.getPreco());
 
+        }catch (PorcentagemNegativaException e){
+            System.out.println(e.getMessage());
         } catch (CupomInvalidoException e){
             System.err.println(e.getMessage() + " CUPOM INVALIDO");
         } catch (InputMismatchException e){

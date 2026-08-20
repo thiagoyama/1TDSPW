@@ -2,6 +2,7 @@ package br.com.fiap.apostila12.model;
 
 import br.com.fiap.apostila12.exception.CupomInvalidoException;
 import br.com.fiap.apostila12.exception.DescontoAcimaDoPrecoException;
+import br.com.fiap.apostila12.exception.PorcentagemNegativaException;
 
 public class Produto {
 
@@ -21,11 +22,16 @@ public class Produto {
         return preco;
     }
 
-//    public double aumentarPreco(int porcentagem){
-//        //A % não pode ser negativa
-//        //Se for negativa, lança a exception PorcentagemNegativaException (filha de exception)
-//        //Aumenta o preço do produto
-//    }
+    public double aumentarPreco(int porcentagem) throws PorcentagemNegativaException{
+        //A % não pode ser negativa
+        if (porcentagem < 0) {
+            //Se for negativa, lança a exception PorcentagemNegativaException (filha de exception)
+            throw new PorcentagemNegativaException("% não pode ser negativa");
+        }
+        //Aumenta o preço do produto
+        preco += preco * porcentagem/100;
+        return preco;
+    }
 
     public double darDesconto(double desconto){
         //validar se o desconto eh maior que o preco
