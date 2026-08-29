@@ -1,15 +1,43 @@
 package br.com.fiap.apostila13.view;
 
+import br.com.fiap.apostila13.dao.ProdutoDao;
+import br.com.fiap.apostila13.model.Produto;
+
+import java.util.Scanner;
+
 public class ExemploCadastro {
     //cadastrar um produto
     static void main(String[] args) {
         //Ler os dados do produto
+        Scanner leitor = new Scanner(System.in);
+        try {
+            System.out.println("Digite o código");
+            int codigo = leitor.nextInt();
 
-        //Instanciar um Produto com os dados
+            System.out.println("Digite o nome");
+            String nome = leitor.next() + leitor.nextLine();
 
-        //Instanciar um ProdutoDao
+            System.out.println("Digite a descrição");
+            String descricao = leitor.next() + leitor.nextLine();
 
-        //Chamar o método de cadastro
+            System.out.println("Digite o valor");
+            double valor = leitor.nextDouble();
 
+            System.out.println("Digite se tem estoque (true/false)");
+            boolean estoque = leitor.nextBoolean();
+
+            //Instanciar um Produto com os dados
+            Produto produto = new Produto(codigo, nome, descricao, valor, estoque);
+
+            //Instanciar um ProdutoDao
+            ProdutoDao dao = new ProdutoDao();
+
+            //Chamar o método de cadastro
+            dao.cadastrar(produto);
+            System.out.println("Produto cadastrado!");
+
+        } catch(Exception e){
+            System.err.println("Erro: " + e.getMessage());
+        }
     }//main
 }//class
