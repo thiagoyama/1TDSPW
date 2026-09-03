@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 //DAO -> Data Access Object
@@ -59,8 +60,27 @@ public class ProdutoDao {
         return new Produto(codigo, nome, descricao, valor, temEstoque);
     }
 
-    public List<Produto> listar(){
-        return null;
+    public List<Produto> listar() throws SQLException {
+        //Criar o comando SQL
+        PreparedStatement stmt = conexao
+                .prepareStatement("select * from t_jdbc_produto");
+        //Executar o comando SQL
+        ResultSet resultSet = stmt.executeQuery();
+        //Criar a lista de Produto
+        List<Produto> lista = new ArrayList<>();
+        //Percorer todos os registros encontrados
+        while (resultSet.next()) {
+            //Recuperar os dados das colunas
+            int codigo = resultSet.getInt("cd_produto");
+            String nome = resultSet.getString("nm_produto");
+            String descricao = resultSet.getString("ds_produto");
+            double valor = resultSet.getDouble("vl_produto");
+            boolean temEstoque = resultSet.getBoolean("st_estoque");
+            //Criar o produto com os dados e adicionar na lista
+            lista.add(new Produto(codigo, nome, descricao, valor, temEstoque));
+        }
+        //Retornar a lista
+        return lista;
     }
 
     public void atualizar(Produto produto){
