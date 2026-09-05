@@ -83,12 +83,31 @@ public class ProdutoDao {
         return lista;
     }
 
-    public void atualizar(Produto produto){
-
+    public void atualizar(Produto produto) throws SQLException, EntidadeNaoEncontradaException {
+        //Criar o prepared statement com o comando SQL
+        PreparedStatement stmt = conexao.prepareStatement("update t_jdbc_produto set nm_produto = ?, " +
+                "ds_produto = ?, vl_produto = ?, st_estoque = ? where cd_produto = ?");
+        //Setar os valores na query
+        stmt.setString(1, produto.getNome());
+        stmt.setString(2, produto.getDescricao());
+        stmt.setDouble(3, produto.getValor());
+        stmt.setBoolean(4, produto.isTemEstoque());
+        stmt.setInt(5, produto.getCodigo());
+        //Executar o comando
+        int linhas = stmt.executeUpdate(); //Retorna o número de linhas afetadas no banco de dados
+        if (linhas == 0)
+            throw new EntidadeNaoEncontradaException("Produto não encontrado");
     }
 
-    public void apagar(int id){
-
+    public void apagar(int id) throws SQLException, EntidadeNaoEncontradaException {
+        //Criar o preparedStatement com o comando SQL
+        PreparedStatement stmt = conexao.prepareStatement("delete from t_jdbc_produto where cd_produto = ?");
+        //Setar o id no comando SQL
+        stmt.setInt(1, id);
+        //Executar o comando SQL
+        int linhas = stmt.executeUpdate();
+        //Validar se realmente apagou algo no banco
+        if (linhas == 0)
+            throw new EntidadeNaoEncontradaException("Produto não encontrado");
     }
-
 }
