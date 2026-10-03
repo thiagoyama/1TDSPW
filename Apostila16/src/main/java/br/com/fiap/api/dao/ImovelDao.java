@@ -19,9 +19,20 @@ public class ImovelDao {
     private static final String SELECT_SQL = "select * from t_api_imovel";
     private static final String SELECT_BY_ID_SQL = "select * from t_api_imovel where cd_imovel = ?";
     private static final String UPDATE_SQL = "update t_api_imovel set ds_imovel = ?, nr_dimensao = ?, vl_imovel = ? where cd_imovel = ?";
+    private static final String DELETE_SQL = "delete from t_api_imovel where cd_imovel = ?";
 
     public ImovelDao(DataSource dataSource){
         this.dataSource = dataSource;
+    }
+
+    public void deletar(int id) throws SQLException, EntidadeNaoEncontradaException {
+        try (Connection conexao = dataSource.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(DELETE_SQL)){
+            stmt.setInt(1, id);
+            int linhas = stmt.executeUpdate();
+            if (linhas == 0)
+                throw new EntidadeNaoEncontradaException("Não tem imovel para apagar");
+        }
     }
 
     public void atualizar(Imovel imovel) throws SQLException, EntidadeNaoEncontradaException {

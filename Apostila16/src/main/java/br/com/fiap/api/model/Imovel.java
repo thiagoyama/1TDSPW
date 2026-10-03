@@ -6,6 +6,7 @@ public class Imovel {
     private String descricao;
     private double metros;
     private double valor;
+    private TipoImovel tipo;
 
     public Imovel(){}
 
@@ -52,5 +53,13 @@ public class Imovel {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public TipoImovel getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoImovel tipo) {
+        this.tipo = tipo;
     }
 }

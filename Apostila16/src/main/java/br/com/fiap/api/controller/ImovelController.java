@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.print.DocFlavor;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,6 +21,12 @@ public class ImovelController {
 
     public ImovelController(ImovelDao dao){
         this.dao = dao;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> remover(@PathVariable int id) throws SQLException, EntidadeNaoEncontradaException {
+        dao.deletar(id);
+        return ResponseEntity.noContent().build(); //Retorna o status 204 No Content
     }
 
     @PutMapping("/{id}")
