@@ -1,8 +1,11 @@
 package br.com.fiap.api.controller;
 
 import br.com.fiap.api.dao.ImovelDao;
+import br.com.fiap.api.dto.ImovelRequestDto;
+import br.com.fiap.api.dto.ImovelResponseDto;
 import br.com.fiap.api.exception.EntidadeNaoEncontradaException;
 import br.com.fiap.api.model.Imovel;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -18,8 +21,10 @@ import java.util.List;
 public class ImovelController {
 
     private ImovelDao dao;
+    private ModelMapper mapper;
 
-    public ImovelController(ImovelDao dao){
+    public ImovelController(ImovelDao dao, ModelMapper mapper){
+        this.mapper = mapper;
         this.dao = dao;
     }
 
@@ -30,7 +35,8 @@ public class ImovelController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizar(@PathVariable int id, @RequestBody Imovel imovel) throws EntidadeNaoEncontradaException, SQLException {
+    public ResponseEntity<Void> atualizar(@PathVariable int id, @RequestBody ImovelRequestDto dto) throws EntidadeNaoEncontradaException, SQLException {
+        Imovel imovel = mapper.map(dto, Imovel.class);
         imovel.setCodigo(id);
         dao.atualizar(imovel);
         return ResponseEntity.ok().build(); //Retorna o Status 200 OK
@@ -48,14 +54,16 @@ public class ImovelController {
     }
 
     @PostMapping
-    public ResponseEntity<Imovel> cadastrar(@RequestBody Imovel imovel,
-                              UriComponentsBuilder builder) throws SQLException {
+    public ResponseEntity<ImovelResponseDto> cadastrar(@RequestBody ImovelRequestDto dto,
+                                                       UriComponentsBuilder builder) throws SQLException {
+
+        Imovel imovel = mapper.map(dto, Imovel.class);
         dao.cadastrar(imovel);
 
         URI uri = builder.path("/imoveis/{id}")
                 .buildAndExpand(imovel.getCodigo()).toUri();
 
-        return ResponseEntity.created(uri).body(imovel);
+        return ResponseEntity.created(uri).body(mapper.map(imovel, ImovelResponseDto.class));
     }
 
 }
