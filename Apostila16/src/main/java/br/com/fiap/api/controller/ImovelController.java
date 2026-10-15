@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.print.DocFlavor;
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -43,14 +44,16 @@ public class ImovelController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Imovel> buscar(@PathVariable int id) throws EntidadeNaoEncontradaException, SQLException {
+    public ResponseEntity<ImovelResponseDto> buscar(@PathVariable int id) throws EntidadeNaoEncontradaException, SQLException {
         Imovel imovel = dao.pesquisarPorId(id);
-        return ResponseEntity.ok(imovel); //Retorna o imovel com o status HTTP 200 OK
+        return ResponseEntity.ok(mapper.map(imovel, ImovelResponseDto.class)); //Retorna o imovel com o status HTTP 200 OK
     }
 
     @GetMapping
-    public List<Imovel> listar() throws SQLException {
-        return dao.listar();
+    public List<ImovelResponseDto> listar() throws SQLException {
+        //Converte a lista de Imovel em uma lista de ImovelResponseDto
+        return dao.listar().stream().map(
+                churros -> mapper.map(churros, ImovelResponseDto.class)).toList();
     }
 
     @PostMapping
