@@ -7,6 +7,7 @@ import br.com.fiap.api.dto.TipoImovelRequestDto;
 import br.com.fiap.api.dto.TipoImovelResponseDto;
 import br.com.fiap.api.model.Imovel;
 import br.com.fiap.api.model.TipoImovel;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +45,7 @@ public class TipoImovelController {
 
     @PostMapping
     public ResponseEntity<TipoImovelResponseDto> cadastrar(
-            @RequestBody TipoImovelRequestDto dto,
+           @Valid @RequestBody TipoImovelRequestDto dto,
             UriComponentsBuilder builder) throws SQLException {
         //Conveter o dto no model
         TipoImovel tipo = mapper.map(dto, TipoImovel.class);

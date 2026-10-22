@@ -5,6 +5,7 @@ import br.com.fiap.api.dto.ImovelRequestDto;
 import br.com.fiap.api.dto.ImovelResponseDto;
 import br.com.fiap.api.exception.EntidadeNaoEncontradaException;
 import br.com.fiap.api.model.Imovel;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class ImovelController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizar(@PathVariable int id, @RequestBody ImovelRequestDto dto) throws EntidadeNaoEncontradaException, SQLException {
+    public ResponseEntity<Void> atualizar(@PathVariable int id, @Valid @RequestBody ImovelRequestDto dto) throws EntidadeNaoEncontradaException, SQLException {
         Imovel imovel = mapper.map(dto, Imovel.class);
         imovel.setCodigo(id);
         dao.atualizar(imovel);
@@ -57,7 +58,7 @@ public class ImovelController {
     }
 
     @PostMapping
-    public ResponseEntity<ImovelResponseDto> cadastrar(@RequestBody ImovelRequestDto dto,
+    public ResponseEntity<ImovelResponseDto> cadastrar(@Valid @RequestBody ImovelRequestDto dto,
                                                        UriComponentsBuilder builder) throws SQLException {
 
         Imovel imovel = mapper.map(dto, Imovel.class);

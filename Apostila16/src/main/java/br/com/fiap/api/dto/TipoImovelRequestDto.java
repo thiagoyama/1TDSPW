@@ -1,13 +1,20 @@
 package br.com.fiap.api.dto;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 public class TipoImovelRequestDto {
 
     private int codigo;
 
+    @NotBlank(message = "Nome é obrigatório" )
+    @Size(max = 60, min = 3, message = "Tamanho válido é de 3 a 60 caracteres")
     private String nome;
 
+    @Future(message = "A data deve estar no futuro")
     private LocalDateTime dataCadastro;
 
     public String getNome() {
